@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SIG</title>
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css">
+<link rel="stylesheet" href="./css/owl.carousel.css">
+<link rel="stylesheet" href="./css/owl.theme.css">
+<link rel="stylesheet" href="./css/common.css">
+
+<meta property="og:image" content="http://www.sigroup.com/img/preview.png" />
+<meta property="og:title" content="SIGroup" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.sigroup.com" />
+<meta property="og:image:width" content="470" />
+<meta property="og:image:height" content="246" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery.query-object.js"></script>
+<script src="./js/owl.carousel.min.js"></script>
+<script>
+var getId = $.query.get("id");
+var currentMenu = null;
+var currentLMenu = null;
+var activeLMenu = null;
+
+if (window.location.pathname=='/' || window.location.pathname=='/index.html') currentMenu = 'menu1';
+if (window.location.pathname.search('solutions')>=0) currentMenu = 'menu2';
+if (window.location.pathname=='/solutions1.html') currentLMenu = 'lMenu1';
+if (window.location.pathname=='/solutions2.html') currentLMenu = 'lMenu2';
+if (window.location.pathname=='/solutions3.html') currentLMenu = 'lMenu3';
+
+function goTo(id) {
+	switch (id) {
+		case 'main1' :
+			//if (window.location.pathname!='/index.html') location.href = './index.html';
+			currentMenu = 'menu1';
+			break;
+		case 'main4' :
+			currentMenu = 'menu3';
+			break;
+		case 'lcs_contents' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=lcs_contents';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_1';
+			break;
+		case 'content2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=content2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_1';
+			break;
+		case 'content3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=content3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_1';
+			break;
+		case 'sample1' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=sample1';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_2';
+			break;
+		case 'sample2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=sample2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_2';
+			break;
+		case 'sample3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=sample3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_2';
+			break;
+	}
+	$('html, body').stop().animate({scrollTop:$('#'+id).offset().top-81}, 1000);
+}
+
+function goToTop() {
+	$('html, body').stop().animate({scrollTop:0}, 1000);
+}
+
+$(document).ready(function(){
+	$('#hMenu li a').on({
+		'mouseenter':function(){
+			var w = $(this).closest('li').width();
+			var l = $(this).offset().left;
+			$('#barMenu').stop().animate({width:w, left:l}, 500);
+		},
+		'click':function(){
+			currentMenu = $(this).attr('id');
+		}
+	});
+	$('#hMenu').on('mouseleave', function(){
+		var w = $('#'+currentMenu).closest('li').width();
+		var l = $('#'+currentMenu).offset().left;
+		$('#barMenu').stop().animate({width:w, left:l}, 500);
+	});
+
+	$('#lMenu li a').on({
+		'mouseenter':function(){
+			activeLMenu = $(this).attr('id');
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+		},
+		'click':function(){
+			currentLMenu = $(this).attr('id');
+		}
+	});
+	$('#lMenu').on('mouseleave', function(){
+		if (currentLMenu) {
+			var h = $('#'+currentLMenu).height()+30;
+			var t = $('#'+currentLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+			activeLMenu = currentLMenu;
+		}
+	});
+	$(window).scroll(function(){
+		if (activeLMenu) {
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').css({height:h, top:t});
+		}
+	});
+
+	$("#owl-carousel").owlCarousel({
+		autoPlay: 5000,
+		items : 5,
+		pagination : false,
+		navigation : true,
+		navigationText : ["", ""]
+	});
+
+	//if (getId) goTo(getId);
+});
+</script>
+</head>
+<body>
+
+<div id="header">
+
+	<div class="nav">
+		<div id="hLogo">
+			<a href="./index.html">
+				<img src="./img/logo.png">
+					<span>COMMUNITY</span>
+				</a>
+			</div>
+
+		<div id="hMenu">
+			<ul>
+				<li><a id="menu1" href="javascript:;" onclick="goTo('main1');">OVERVIEW</a></li>
+				<li><a id="menu2" href="./solutions1.html">SOLUTIONS</a></li>
+				<li><a id="menu3" href="javascript:;" onclick="goTo('main4');">CONTACT US</a></li>
+			</ul>
+			<div id="barMenu"></div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="wrap">
+	<div id="lMenu">
+		<div id="barLMenu"></div>
+		<ul>
+			<li>
+				<a id="lMenu1" href="./solutions1.html">Zetworks-LCS</a>
+				<a id="lMenu1_1" href="javascript:;" onclick="goTo('lcs_contents');">Retrieval Visualization</a>
+				<a id="lMenu1_2" href="javascript:;" onclick="goTo('sample1');">Sample Creation</a>
+			</li>
+			<li>
+				<a id="lMenu2" href="./solutions2.html">Zetworks-APG</a>
+				<a id="lMenu2_1" href="javascript:;" onclick="goTo('content2');">Compliance with<br>privacy laws</a>
+				<a id="lMenu2_2" href="javascript:;" onclick="goTo('sample2');">Sample Creation</a>
+			</li>
+			<li>
+				<a id="lMenu3" href="./solutions3.html">Zetworks-WMC</a>
+				<a id="lMenu3_1" href="javascript:;" onclick="goTo('content3');">Search engine based<br>web mail system</a>
+				<a id="lMenu3_2" href="javascript:;" onclick="goTo('sample3');">Sample Creation</a>
+			</li>
+		</ul>
+	</div>
+
+	<!--sub contents-->
+
+	<div class="sub_contents">
+		
+		<div class="sub_title" id="content3">
+			<h3>Zetworks-WMC</h3>
+			<p>(웹메일 클라이언트)</p>
+		</div>
+
+		<div class="wmc_contents">
+			<h4>검색엔진 기반 웹메일 시스템</h4>
+			<span class="wmc_img"></span>
+
+			<div class="lcs_cont wmc_cont01">
+				<ul class="listStyle">
+					<li>대용량 검색 지원을 위한 NoSQL(Elasticsearch) 기반의 웹메일 클라이언트 시스템</li>
+					<li> Zetworks-WMC 구축, SMTP, POP3 등 메일 중계 서버 별도 운영 필요</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="lcs_contents">
+			<h4>Main Function</h4>
+
+			<div class="apg_cont">
+				<ul class="listStyle">
+					<li><span>Collect mail</span>
+						<ul>
+							<li>메일수집</li>
+							<li>공용 메일을 위한 별도의 사용자 메일 할당 기능</li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="listStyle">
+					<li><span>Convenience</span>
+						<ul>
+							<li>검색엔진 기반 메일 수집을 통한 빠른 검색 속도(사용자, 제목, 본문, 첨부파일명, 범주 등)</li>
+							<li>다중 필터 기능(적용규칙 : N, 예외규칙 : N, 처리규칙 : N)</li>
+							<li>다양한 처리 규칙 제공(폴더이동, 범주할당, 읽음처리, 삭제처리, 특정메일로 포워딩)</li>
+							<li>범주 관리 기능</li>
+							<li>발송계정 설정을 통한 다수의 공용 메일 계정 사용자를 위한 발신자 설정 기능</li>
+							<li>연락처 자동 수집 기능 및 분류</li>
+							<li>멀티 서명 관리를 통한 다수의 메일 계정 관리 편의</li>
+							<li>신규 메일 작성 시 기존 메일 첨부 및 기존 메일내 첨부파일 검색 첨부 기능</li>
+							<li>특정 조건에 따른 사용자+메일계정 할당 기능(특정 기간 이후, 특정 필터 조건 등)</li>
+							<li>서버 기반의 사용자 운용 환경 설정</li>
+							<li>EML 파일 관리자 복원 기능</li>
+						</ul>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+
+		<div class="wmc_contents samp_corousel" id="sample3">
+			<h4>Sample Creation Cases</h4>
+			<span class="wmc_sample_img"></span>
+		</div>
+
+		<div class="lcs_cont03">
+			<ul class="listStyle">
+				<li>Case
+					<ul>
+						<li>공용 계정을 통한 전세계 선사 견적 및 발주 관리</li>
+						<li>기존 아웃룩 메일 클라이언트를 통한 사용자 환경
+							<ul>
+								<li>→ 메일함 용량 및 공용 계정에 대한 다수의 사용자 처리로 인한 부하, 보안, 운영 문제점 존재</li>
+							</ul>
+						</li>
+						<li>Zetworks-WMC를 통한 공용계정 관리, 검색, 필터 등 개별 환경으로 전환</li>
+						<li>대량의 메일처리 시 병목 발생 현상 해결, 관리자에 의한 신규 사원입사시 공용 계정 메일 전달 범위 지정</li>
+						<li>일반적인 메일 처리는 기존 웹메일 클라이언트 솔루션과 동일</li>
+						<li>검색엔진 기반 메일 저장소를 통한 신속한 검색 결과 및 필터 정보 제공</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+	</div>
+
+	<!--sub contents-->
+</div>
+
+<div id="footer">
+	<div class="footer">
+		<div class="ft_sigleft">
+			<h2>SIGroup</h2>
+			<p>copyright (c) SI Group Team 2019, All rights reserved</p>
+		</div>
+
+		<div class="ft_cont">
+			<ul>
+				<li>Stie map
+					<ul>
+						<li>
+							<a href="./index.html">Overview</a></li>
+						<li>
+							<a href="#">Solutions</a>
+							<ul class="solutions_li">
+								<li><a href="./solutions1.html">- Solutions1</a></li>
+								<li><a href="./solutions2.html">- Solutions2</a></li>
+								<li><a href="./solutions3.html">- Solutions3</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="./index.html?id=main4">Contect Us</a></li>
+						<li>
+					</ul>
+				</li>
+
+				<li>Contact US
+					<ul class="contact_li">
+						<li>
+							<a href="tel:+82-051-123-4567">+82-051-123-4567</a>
+						</li>
+						<li>
+							<a href="mailto:sigroup_team@sig.co.kr">sigroup_team@sig.co.kr</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="top">
+			<a id="goToTop" href="javascript:;" onclick="goToTop();"></a>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

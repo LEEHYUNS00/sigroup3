@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SIG</title>
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css">
+<link rel="stylesheet" href="./css/owl.carousel.css">
+<link rel="stylesheet" href="./css/owl.theme.css">
+<link rel="stylesheet" href="./css/common.css">
+
+<meta property="og:image" content="http://www.sigroup.com/img/preview.png" />
+<meta property="og:title" content="SIGroup" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.sigroup.com" />
+<meta property="og:image:width" content="470" />
+<meta property="og:image:height" content="246" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery.query-object.js"></script>
+<script src="./js/owl.carousel.min.js"></script>
+<script>
+var getId = $.query.get("id");
+var currentMenu = null;
+var currentLMenu = null;
+var activeLMenu = null;
+
+if (window.location.pathname=='/' || window.location.pathname=='/index.html') currentMenu = 'menu1';
+if (window.location.pathname.search('solutions')>=0) currentMenu = 'menu2';
+if (window.location.pathname=='/solutions1.html') currentLMenu = 'lMenu1';
+if (window.location.pathname=='/solutions2.html') currentLMenu = 'lMenu2';
+if (window.location.pathname=='/solutions3.html') currentLMenu = 'lMenu3';
+
+function goTo(id) {
+	switch (id) {
+		case 'main1' :
+			//if (window.location.pathname!='/index.html') location.href = './index.html';
+			currentMenu = 'menu1';
+			break;
+		case 'main4' :
+			currentMenu = 'menu3';
+			break;
+		case 'lcs_contents' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=lcs_contents';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_1';
+			break;
+		case 'content2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=content2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_1';
+			break;
+		case 'content3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=content3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_1';
+			break;
+		case 'sample1' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=sample1';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_2';
+			break;
+		case 'sample2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=sample2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_2';
+			break;
+		case 'sample3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=sample3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_2';
+			break;
+	}
+	$('html, body').stop().animate({scrollTop:$('#'+id).offset().top-81}, 1000);
+}
+
+function goToTop() {
+	$('html, body').stop().animate({scrollTop:0}, 1000);
+}
+
+$(document).ready(function(){
+	$('#hMenu li a').on({
+		'mouseenter':function(){
+			var w = $(this).closest('li').width();
+			var l = $(this).offset().left;
+			$('#barMenu').stop().animate({width:w, left:l}, 500);
+		},
+		'click':function(){
+			currentMenu = $(this).attr('id');
+		}
+	});
+	$('#hMenu').on('mouseleave', function(){
+		var w = $('#'+currentMenu).closest('li').width();
+		var l = $('#'+currentMenu).offset().left;
+		$('#barMenu').stop().animate({width:w, left:l}, 500);
+	});
+
+	$('#lMenu li a').on({
+		'mouseenter':function(){
+			activeLMenu = $(this).attr('id');
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+		},
+		'click':function(){
+			currentLMenu = $(this).attr('id');
+		}
+	});
+	$('#lMenu').on('mouseleave', function(){
+		if (currentLMenu) {
+			var h = $('#'+currentLMenu).height()+30;
+			var t = $('#'+currentLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+			activeLMenu = currentLMenu;
+		}
+	});
+	$(window).scroll(function(){
+		if (activeLMenu) {
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').css({height:h, top:t});
+		}
+	});
+
+	$("#owl-carousel").owlCarousel({
+		autoPlay: 5000,
+		items : 5,
+		pagination : false,
+		navigation : true,
+		navigationText : ["", ""]
+	});
+
+	//if (getId) goTo(getId);
+});
+</script>
+</head>
+<body>
+
+<div id="header">
+
+	<div class="nav">
+		<div id="hLogo">
+			<a href="./index.html">
+				<img src="./img/logo.png">
+					<span>COMMUNITY</span>
+				</a>
+			</div>
+
+		<div id="hMenu">
+			<ul>
+				<li><a id="menu1" href="#main1" onclick="goTo('main1');">OVERVIEW</a></li>
+				<li><a id="menu2" href="./solutions1.html">SOLUTIONS</a></li>
+				<li><a id="menu3" href="#main4" onclick="goTo('main4');">CONTACT US</a></li>
+			</ul>
+			<div id="barMenu"></div>
+		</div>
+	</div>
+
+</div>
+
+
+<div id="main1">
+	<div class="contents">
+		
+		<!-- overview-->
+		<div class="overview">
+			<div class="overview_cont">
+				<div class="overview_m01">
+					<div class="overview_m01_txt">
+						<h2>Security, Network Infrastructure Design & Services</h2>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum I'm a paragraph.
+						</p>
+						<br />
+						<p>
+						 Click here to add your own text and edit me.It’s easy. Just click &quot Edit Text &quot or double click me to add your owncontent and make changes to the font. 
+						</p>
+					</div>
+
+					<div class="overview_m01_img">
+						<img src="./img/overview1.png" />
+					</div>
+				</div>
+
+				<div class="overview_m02">
+					<div class="overview_m02_txt">
+						<h2>Security, Network Infrastructure Design & Services</h2>
+						<p>
+							If you have branch offices and remote locations that need to run SaaS applications or connect to your network, Barracuda can dramatically reduce your WAN costs. The traditional approach of backhauling traffic to a main office via costly MPLS leased lines can’t deliver on price and performance in the cloud era.
+						</p>
+						<br />
+						<p>		
+							Barracuda lets you establish direct internet breakouts for optimized cloud accessibility.
+						</p>
+					</div>
+					
+					<div class="overview_m02_img">
+						<img src="./img/overview2.png" />
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- overview-->
+
+
+		<!-- SIG down -->
+		<div class="sigdown">
+			<div class="sigdown_cont">
+
+				<div class="sigdown_title">
+					<h2>SIGroup Profile Download</h2>
+					<p>Let's Get In click!</p>
+				</div>
+
+				<div class="sigdowndot">
+					<span class="dot"></span>
+					<span class="dot active"></span>
+					<span class="dot hover"></span>
+				</div>
+
+				<div class="sigdown_btn">
+					<a href="#">
+						<img src="./img/btn_download.png" />
+					</a>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- SIG down -->
+
+		<!-- profile -->
+		<div id="profile">
+			<div class="profile">
+
+				<h2>Professional Team</h2>
+				<p>Introduced</p>
+
+				<div class="profile_list">
+					
+					<div class="profile_img">
+						<ul>
+							<li>
+								<img src="./img/staff1.png" />
+							</li>
+						</ul>
+						
+						<ul class="profile_li">
+							<li><span>Development</span></li>
+							<li>Team Leader
+								<ul class="profile_licon">
+									<li>Development work</li>
+									<li>(82) 1234-5678-90</li>
+									<li>hugoz1013@gmail.com</li>
+								</ul>
+							</li>
+						<ul>
+					</div>
+
+					<div class="profile_img">
+						<ul>
+							<li>
+								<img src="./img/staff2.png" />
+							</li>
+						</ul>
+						
+						<ul class="profile_li">
+							<li><span>Development</span></li>
+							<li>Team Leader
+								<ul class="profile_licon">
+									<li>Development work</li>
+									<li>(82) 1234-5678-90</li>
+									<li>hugoz1013@gmail.com</li>
+								</ul>
+							</li>
+						<ul>
+					</div>
+
+					<div class="profile_img">
+						<ul>
+							<li>
+								<img src="./img/staff3.png" />
+							</li>
+						</ul>
+						
+						<ul class="profile_li">
+							<li><span>Development</span></li>
+							<li>Team Leader
+								<ul class="profile_licon">
+									<li>Development work</li>
+									<li>(82) 1234-5678-90</li>
+									<li>hugoz1013@gmail.com</li>
+								</ul>
+							</li>
+						<ul>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		<!-- profile -->
+
+		<!-- Contact US -->
+			
+		<div class="contact" id="main4">
+			<div class="contact_title">
+				<h2>Contact US</h2>
+				<p>Please feel free to ask any questions</p>
+			</div>
+
+			<div class="contact_cont">
+				<span></span>
+				<p>133, Gwajeong-ro, Yeonje-gu, Busan (82) 051-123-4567</p>
+				<a href="https://goo.gl/maps/DkpEto8NNLE2" target="_blank">MAP VIEW</a>
+			</div>
+		</div>
+
+		
+
+		<!-- Contact US -->
+
+	</div>
+</div>
+
+<div id="footer">
+	<div class="footer">
+		<div class="ft_sigleft">
+			<h2>SIGroup</h2>
+			<p>copyright (c) SI Group Team 2019, All rights reserved</p>
+		</div>
+
+		<div class="ft_cont">
+			<ul>
+				<li>Stie map
+					<ul>
+						<li>
+							<a href="./index.html">Overview</a></li>
+						<li>
+							<a href="#">Solutions</a>
+							<ul class="solutions_li">
+								<li><a href="./solutions1.html">- Solutions1</a></li>
+								<li><a href="./solutions2.html">- Solutions2</a></li>
+								<li><a href="./solutions3.html">- Solutions3</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="./index.html?id=main4">Contect Us</a></li>
+						<li>
+					</ul>
+				</li>
+
+				<li>Contact US
+					<ul class="contact_li">
+						<li>
+							<a href="tel:+82-051-123-4567">+82-051-123-4567</a>
+						</li>
+						<li>
+							<a href="mailto:sigroup_team@sig.co.kr">sigroup_team@sig.co.kr</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="top">
+			<a id="goToTop" href="javascript:;" onclick="goToTop();"></a>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

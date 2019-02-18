@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SIG</title>
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+<link rel="stylesheet" href="http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css">
+<link rel="stylesheet" href="./css/owl.carousel.css">
+<link rel="stylesheet" href="./css/owl.theme.css">
+<link rel="stylesheet" href="./css/common.css">
+
+<meta property="og:image" content="http://www.sigroup.com/img/preview.png" />
+<meta property="og:title" content="SIGroup" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.sigroup.com" />
+<meta property="og:image:width" content="470" />
+<meta property="og:image:height" content="246" />
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery.query-object.js"></script>
+<script src="./js/owl.carousel.min.js"></script>
+<script>
+var getId = $.query.get("id");
+var currentMenu = null;
+var currentLMenu = null;
+var activeLMenu = null;
+
+if (window.location.pathname=='/' || window.location.pathname=='/index.html') currentMenu = 'menu1';
+if (window.location.pathname.search('solutions')>=0) currentMenu = 'menu2';
+if (window.location.pathname=='/solutions1.html') currentLMenu = 'lMenu1';
+if (window.location.pathname=='/solutions2.html') currentLMenu = 'lMenu2';
+if (window.location.pathname=='/solutions3.html') currentLMenu = 'lMenu3';
+
+function goTo(id) {
+	switch (id) {
+		case 'main1' :
+			//if (window.location.pathname!='/index.html') location.href = './index.html';
+			currentMenu = 'menu1';
+			break;
+		case 'main4' :
+			currentMenu = 'menu3';
+			break;
+		case 'lcs_contents' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=lcs_contents';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_1';
+			break;
+		case 'content2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=content2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_1';
+			break;
+		case 'content3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=content3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_1';
+			break;
+		case 'sample1' :
+			//if (window.location.pathname!='/solutions1.html') location.href = './solutions1.html?id=sample1';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu1_2';
+			break;
+		case 'sample2' :
+			//if (window.location.pathname!='/solutions2.html') location.href = './solutions2.html?id=sample2';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu2_2';
+			break;
+		case 'sample3' :
+			//if (window.location.pathname!='/solutions3.html') location.href = './solutions3.html?id=sample3';
+			currentMenu = 'menu2';
+			currentLMenu = 'lMenu3_2';
+			break;
+	}
+	$('html, body').stop().animate({scrollTop:$('#'+id).offset().top-81}, 1000);
+}
+
+function goToTop() {
+	$('html, body').stop().animate({scrollTop:0}, 1000);
+}
+
+$(document).ready(function(){
+	$('#hMenu li a').on({
+		'mouseenter':function(){
+			var w = $(this).closest('li').width();
+			var l = $(this).offset().left;
+			$('#barMenu').stop().animate({width:w, left:l}, 500);
+		},
+		'click':function(){
+			currentMenu = $(this).attr('id');
+		}
+	});
+	$('#hMenu').on('mouseleave', function(){
+		var w = $('#'+currentMenu).closest('li').width();
+		var l = $('#'+currentMenu).offset().left;
+		$('#barMenu').stop().animate({width:w, left:l}, 500);
+	});
+
+	$('#lMenu li a').on({
+		'mouseenter':function(){
+			activeLMenu = $(this).attr('id');
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+		},
+		'click':function(){
+			currentLMenu = $(this).attr('id');
+		}
+	});
+	$('#lMenu').on('mouseleave', function(){
+		if (currentLMenu) {
+			var h = $('#'+currentLMenu).height()+30;
+			var t = $('#'+currentLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').stop().animate({height:h, top:t}, 500);
+			activeLMenu = currentLMenu;
+		}
+	});
+	$(window).scroll(function(){
+		if (activeLMenu) {
+			var h = $('#'+activeLMenu).height()+30;
+			var t = $('#'+activeLMenu).offset().top;
+			var st = $(window).scrollTop();
+			t = t - st;
+			$('#barLMenu').css({height:h, top:t});
+		}
+	});
+
+	$("#owl-carousel").owlCarousel({
+		autoPlay: 5000,
+		items : 5,
+		pagination : false,
+		navigation : true,
+		navigationText : ["", ""]
+	});
+
+	//if (getId) goTo(getId);
+});
+</script>
+</head>
+<body>
+
+<div id="header">
+
+	<div class="nav">
+		<div id="hLogo">
+			<a href="./index.html">
+				<img src="./img/logo.png">
+					<span>COMMUNITY</span>
+				</a>
+			</div>
+
+		<div id="hMenu">
+			<ul>
+				<li><a id="menu1" href="javascript:;" onclick="goTo('main1');">OVERVIEW</a></li>
+				<li><a id="menu2" href="./solutions1.html">SOLUTIONS</a></li>
+				<li><a id="menu3" href="javascript:;" onclick="goTo('main4');">CONTACT US</a></li>
+			</ul>
+			<div id="barMenu"></div>
+		</div>
+	</div>
+
+</div>
+
+
+<div class="wrap">
+	<div id="lMenu">
+		<div id="barLMenu"></div>
+		<ul>
+			<li>
+				<a id="lMenu1" href="./solutions1.html">Zetworks-LCS</a>
+				<a id="lMenu1_1" href="javascript:;" onclick="goTo('lcs_contents');">Retrieval Visualization</a>
+				<a id="lMenu1_2" href="javascript:;" onclick="goTo('sample1');">Sample Creation</a>
+			</li>
+			<li>
+				<a id="lMenu2" href="./solutions2.html">Zetworks-APG</a>
+				<a id="lMenu2_1" href="javascript:;" onclick="goTo('content2');">Compliance with<br>privacy laws</a>
+				<a id="lMenu2_2" href="javascript:;" onclick="goTo('sample2');">Sample Creation</a>
+			</li>
+			<li>
+				<a id="lMenu3" href="./solutions3.html">Zetworks-WMC</a>
+				<a id="lMenu3_1" href="javascript:;" onclick="goTo('content3');">Search engine based<br>web mail system</a>
+				<a id="lMenu3_2" href="javascript:;" onclick="goTo('sample3');">Sample Creation</a>
+			</li>
+		</ul>
+	</div>
+
+	<!--sub contents-->
+
+	<div class="sub_contents">
+		
+		<div class="sub_title" id="lcs_contents">
+			<h3>Zetworks-LCS</h3>
+			<p>(로그 통합 및 시각화 서비스)</p>
+		</div>
+
+		<div class="lcs_contents">
+			<h4>현업 운영에 필요한 실시간 데이터 수집, 검색 및 시각화</h4>
+			<span class="lcs_con_img"></span>
+
+			<div class="lcs_cont lcs_cont01">
+				<ul class="listStyle">
+					<li>보안장비, 네트워크 장비, 주요 서버, 어플리케이션 로그 등 분야별 로그를 실시간 취합하여 각 고객사의 중요도에 맞게 시각화</li>
+					<li>ERP, MES 등 주요 전사적 데이터를 실시간 집계 및 사용자 정의 시각화 서비스 교육 및 지원</li>
+					<li>Zetworks Framework + 오픈소스(ELK) + 오픈소스(icinga2) 를 통한 구축 서비스</li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="lcs_contents">
+			<h4>Main Function</h4>
+
+			<div class="lcs_cont02">
+				<ul class="listStyle">
+					<li><span>System Availability</span>
+						<ul>
+							<li>프로세스별 메모리, CPU 상태</li>
+							<li>시스템 이벤트와 상태 정보를 동일 대시보드에 가시화하여 신속한 원인 분석</li>
+							<li>디스크 정보 출력</li>
+						</ul>
+					</li>
+				</ul>
+
+				<ul class="listStyle">
+					<li><span>Network Security</span>
+						<ul>
+							<li>Syslog, netflow, snmp 등 실시간 정보 수집 및 저장</li>
+							<li>주요 위협에 대한 실시간 가시성 제공</li>
+							<li>인터넷 및 내부 네트워크 접근에 대한 방화벽 접근, 웹필터 로그, IPS 로그, 어플리케이션 필터 로그 등을 실시간 가시화 인터넷 및 내부 네트워크 접근에 대한 방화벽 접근, 웹필터 로그, IPS 로그, 어플리케이션 필터 로그 등을 실시간 가시화</li>
+							<li>트래픽 유발 사용현황에 대한 신속, 정확한 대시보드 생성 제공</li>
+							<li>IP 정보에 대한 실시간 국가정보 매핑으로 접속국가에 대한 정보 출력</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="lcs_contents samp_corousel" id="sample1">
+			<h4>Sample Creation Cases</h4>
+			<span class="lcs_sample_img"></span>
+		</div>
+
+		<div id="owl-carousel">
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+			<a href="javascript:;"><img src="./img/thumb1.jpg"></a>
+		</div>
+
+		<div class="lcs_cont03">
+			<ul class="listStyle">
+				<li><span> Case1 </span>
+					<ul>
+						<li>모든 운용 시스템 및 네트워크 장비, 보안장비 로그 실시간 수집 및 검색, 모니터링에 활용</li>
+						<li>기존 그룹웨어, 빌링시스템, ERP 등 어플리케이션 로그 처리 프로그램 개선 후 당사 서비스를 통한 로그 통합 및 실시간 대시보드 구현</li>
+						<li>타사 제품 검토 결과 유연한 제품연동 라이선스 정책 및 향 후 지속적인 기술지원, 환경 변화에 대한 유연성 등에 우수한 평가를 받음</li>
+						<li>로그 정형화를 통한 전체 로그의 연관 검색 구조화</li>
+						<li>오픈소스 활용을 통한 구축 및 유지비용 절감</li>
+					</ul>
+				</li>
+
+				<li><span>Case2</span>
+					<ul>
+						<li>시스템, 네트워크, 보안장비 로그 실시간 수집 및 NAS, DRM, 그룹웨어, ERP 데이터 SQL Indexing을 통한 BI. 모니터링 구현</li>
+						<li>그룹웨어와 Zetworks간 인증 API를 통한 개인 사용자 전용 대시보드 연동</li>
+						<li>주요 임원 대시보드 2차 인증을 통한 접근 강화</li>
+						<li>구축 및 수집 방법등 교육을 통한 자체 데이터 연동 능력 전달</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+	</div>
+
+	<!--sub contents-->
+</div>
+
+<div id="footer">
+	<div class="footer">
+		<div class="ft_sigleft">
+			<h2>SIGroup</h2>
+			<p>copyright (c) SI Group Team 2019, All rights reserved</p>
+		</div>
+
+		<div class="ft_cont">
+			<ul>
+				<li>Stie map
+					<ul>
+						<li>
+							<a href="./index.html">Overview</a></li>
+						<li>
+							<a href="#">Solutions</a>
+							<ul class="solutions_li">
+								<li><a href="./solutions1.html">- Solutions1</a></li>
+								<li><a href="./solutions2.html">- Solutions2</a></li>
+								<li><a href="./solutions3.html">- Solutions3</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="./index.html?id=main4">Contect Us</a></li>
+						<li>
+					</ul>
+				</li>
+
+				<li>Contact US
+					<ul class="contact_li">
+						<li>
+							<a href="tel:+82-051-123-4567">+82-051-123-4567</a>
+						</li>
+						<li>
+							<a href="mailto:sigroup_team@sig.co.kr">sigroup_team@sig.co.kr</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="top">
+			<a id="goToTop" href="javascript:;" onclick="goToTop();"></a>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
